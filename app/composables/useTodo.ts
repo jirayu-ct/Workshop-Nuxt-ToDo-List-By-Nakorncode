@@ -12,8 +12,27 @@ export interface TodoList {
     items: TodoListItem[];
 }
 
+let todos: Ref<TodoList[]>
+
 export const useTodo = () => {
-    const todos = useState<TodoList[]>('todos', () => [])
+    todos = useState<TodoList[]>('todos', () => [])
+
+    // Singleton pattern
+    if (!todos) {
+        watch(todos, (newTodos) => {
+            const data = JSON.stringify(newTodos)
+            localStorage.setItem('todos', data)
+        }, { deep: true })
+    }
+
+    const loadTodoListFromLocalStorage = () => {
+        const data = localStorage.getItem('todos')
+        if (data) {
+            // validate data
+            todos.value = JSON.parse(data)
+        }
+    }
+
 
     const addTodo = (title: string) => {
         todos.value.push({
@@ -90,5 +109,6 @@ export const useTodo = () => {
         updateTodoTitle,
         removeTodo,
         getTodo,
+        loadTodoListFromLocalStorage
     }
 }

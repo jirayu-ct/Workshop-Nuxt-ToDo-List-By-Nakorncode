@@ -4,15 +4,22 @@
 const { updateTodoTitle } = useTodo()
 const open = ref(false)
 
-const props = defineProps<{
-    todo: TodoList
+
+const emit = defineEmits<{
+    'update': [newTitle: string]
 }>()
 
-const title = ref(props.todo.title)
+const props = defineProps<{
+    headerTitle: string,
+    previosTitle: string,
+    placeholder: string
+}>()
+
+const title = ref(props.previosTitle)
 
 
 const onUpdated = () => {
-    updateTodoTitle(props.todo.id, title.value)
+    emit('update', title.value)
     open.value = false
 }
 </script>
@@ -20,7 +27,7 @@ const onUpdated = () => {
 <template>
     <UModal 
         v-model:open="open"
-        title="Update Title" 
+        :title="headerTitle" 
         :close="{
             color: 'primary',
             variant: 'outline',
@@ -31,11 +38,11 @@ const onUpdated = () => {
         }"
     
     >
-        <UButton color="secondary" size="xs">Update Title</UButton>
+        <slot />
         <template #body>
             <form @submit.prevent="onUpdated">
                 <div class="flex gap-1">
-                    <UInput class="w-full" v-model="title" placeholder="Enter a new title"></UInput>
+                    <UInput class="w-full" v-model="title" :placeholder="props.placeholder"></UInput>
                     <UButton type="submit">Update</UButton>
                 </div>
             </form>
