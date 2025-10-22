@@ -6,7 +6,7 @@ export interface TodoListItem {
     done: boolean;
 }
 
-interface TodoList {
+export interface TodoList {
     id: string;
     title: string;
     items: TodoListItem[];
