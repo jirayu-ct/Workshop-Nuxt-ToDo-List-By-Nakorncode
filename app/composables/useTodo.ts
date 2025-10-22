@@ -34,10 +34,61 @@ export const useTodo = () => {
         }
     }
 
+    const getTodo = (id: string) => {
+        const todo = todos.value.find(todo => todo.id === id)
+
+        if (!todo) {
+            throw new Error('Todo not found')
+        }
+
+        const addItem = (itemTitle: string) => {
+            todo.items.push({
+                id: uuid(),
+                title: itemTitle,
+                done: false
+            })
+        }
+
+        const updateItemTitle = (itemId: string, newTitle: string) => {
+            const item = todo.items.find(item => item.id === itemId)
+            if (item) {
+                item.title = newTitle
+            }
+        }
+
+        const markITemDone = (id: string) => {
+            const item = todo.items.find(item => item.id === id)
+            if (item) {
+                item.done = true
+            }
+        }
+
+        const markItemUndone = (id: string) => {
+            const item = todo.items.find(item => item.id === id)
+            if (item) {
+                item.done = false
+            }
+        }
+
+        const removeItem = (itemId: string) => {
+            todo.items = todo.items.filter(item => item.id !== itemId)
+        }
+
+        return {
+            todo,
+            addItem,
+            updateItemTitle,
+            markITemDone,
+            markItemUndone,
+            removeItem,
+        }
+    }
+
     return {
         todos,
         addTodo,
         updateTodoTitle,
         removeTodo,
+        getTodo,
     }
 }
