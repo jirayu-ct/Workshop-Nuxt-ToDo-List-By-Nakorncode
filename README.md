@@ -76,10 +76,27 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 
 
-Package install
+Package install client
 ```
 
 pnpm install tailwindcss @tailwindcss/vite
 pnpm install uuid
+
+```
+
+Package install server
+```
+5:27:30
+pnpm add better-auth
+pnpm i prisma
+pnpm i @prisma/client
+pnpm prisma init
+
+pnpm install prisma --save-dev
+pnpm install @prisma/client
+pnpm dotenv
+pnpm prisma db push
+
+npx @better-auth/cli generate
 
 ```
