@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const toast = useToast()
+const { login } = useUser()
 
 const input = ref({
     email: '',
@@ -7,24 +8,21 @@ const input = ref({
 })
 
 const onLogin = async () => {
-    const { data, error } = await authClient.signIn.email({
-        ...input.value
-    })
+    try {
+        const data = await login(input.value.email, input.value.password)
 
-    if(error) {
         toast.add({
-            title: error.message || 'Login Failed',
+            title: `Login Successful! on email ${data.user.email}`,
+            color: 'success'
+        })
+        await navigateTo('/')
+    } catch (error) {
+        toast.add({
+            title: (error as Error).message || 'Login Failed',
             color: 'error'
         })
         return
     }
-
-    toast.add({
-        title: `Login Successful! on email ${data.user.email}`,
-        color: 'success'
-    })
-
-    await navigateTo('/')
 }
 </script>
 
@@ -39,7 +37,8 @@ const onLogin = async () => {
                 </UFormField>
 
                 <UFormField label="Password">
-                    <UInput v-model="input.password" name="password" class="w-full" placeholder="Password" type="password" />
+                    <UInput v-model="input.password" name="password" class="w-full" placeholder="Password"
+                        type="password" />
                 </UFormField>
 
                 <div class="mt-4">
