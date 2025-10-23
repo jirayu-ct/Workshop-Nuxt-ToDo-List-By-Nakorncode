@@ -14,12 +14,9 @@ export const useUser = () => {
                 user.value = null
                 return
             }
-
             user.value = session.data.user
-
-        }
-        catch (error) {
-            console.error("Error fetching current user:", error)
+        } catch (error) {
+            console.error(error)
             user.value = null
         }
     }

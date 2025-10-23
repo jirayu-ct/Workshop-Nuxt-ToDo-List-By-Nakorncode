@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid"; 'uuid'
+import { v4 as uuid } from "uuid"
 
 export interface TodoListItem {
     id: string;
@@ -8,6 +8,7 @@ export interface TodoListItem {
 
 export interface TodoList {
     id: string;
+    onlineMode: boolean;
     title: string;
     items: TodoListItem[];
 }
@@ -25,6 +26,8 @@ export const useTodo = () => {
         }, { deep: true })
     }
 
+    const { user } = useUser()
+
     const loadTodoListFromLocalStorage = () => {
         const data = localStorage.getItem('todos')
         if (data) {
@@ -37,6 +40,7 @@ export const useTodo = () => {
     const addTodo = (title: string) => {
         todos.value.push({
             id: uuid(),
+            onlineMode: user.value !== null,
             title,
             items: []
         })
@@ -103,12 +107,28 @@ export const useTodo = () => {
         }
     }
 
+    const syncTodo = async (id: string) => {
+        const { todo } = getTodo(id)
+        if (todo.onlineMode) {
+            return
+        }
+
+
+        const { message } = await $fetch('/api/todos/sync', {
+            method: 'POST',
+            body: todo
+        })
+        todo.onlineMode = true
+        return { message }
+    }
+
     return {
         todos,
         addTodo,
         updateTodoTitle,
         removeTodo,
         getTodo,
-        loadTodoListFromLocalStorage
+        loadTodoListFromLocalStorage,
+        syncTodo,
     }
 }

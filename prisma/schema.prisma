@@ -14,8 +14,17 @@ generator client {
 }
 
 model TodoList {
-  id    String @id @default(uuid())
+  id    String         @id @default(uuid())
   title String
+  items TodoListItem[]
+}
+
+model TodoListItem {
+  id         String   @id @default(uuid())
+  title      String
+  done       Boolean  @default(false)
+  todoListId String
+  todoList   TodoList @relation(fields: [todoListId], references: [id], onDelete: Cascade)
 }
 
 model User {

@@ -27,7 +27,7 @@ const onLogout = async () => {
 
                     <template v-else>
                         <li class="ml-auto"><span>{{ user.email }}</span></li>
-                        <li><u-button @click="logout">Logout</u-button></li>
+                        <li><u-button @click="onLogout">Logout</u-button></li>
                     </template>
                 </ul>
             </div>

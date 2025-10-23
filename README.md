@@ -99,4 +99,6 @@ pnpm prisma db push
 
 npx @better-auth/cli generate
 
+pnpm i zod
+
 ```

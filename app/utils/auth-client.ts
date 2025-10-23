@@ -1,5 +1,6 @@
-import { createAuthClient } from "better-auth/vue" // make sure to import from better-auth/vue
-
+import { createAuthClient } from "better-auth/vue"
+// import "dotenv/config";
 export const authClient = createAuthClient({
-    //you can pass client configuration here
+    /** The base URL of the server (optional if you're using the same domain) */
+    baseURL: process.env.BETTER_AUTH_URL
 })
