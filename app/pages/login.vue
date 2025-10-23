@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const toast = useToast()
 const { login } = useUser()
+const loading = ref(false)
 
 const input = ref({
     email: '',
@@ -9,6 +10,7 @@ const input = ref({
 
 const onLogin = async () => {
     try {
+        loading.value = true
         const data = await login(input.value.email, input.value.password)
 
         toast.add({
@@ -23,6 +25,7 @@ const onLogin = async () => {
         })
         return
     }
+    loading.value = false
 }
 </script>
 
@@ -42,7 +45,7 @@ const onLogin = async () => {
                 </UFormField>
 
                 <div class="mt-4">
-                    <UButton type="submit" block>Sign Up</UButton>
+                    <UButton type="submit" block :loading="loading">Sign Up</UButton>
                 </div>
             </div>
         </form>

@@ -22,6 +22,7 @@ export const useUser = () => {
     }
 
     const login = async (email: string, password: string) => {
+        const { loadTodoListFromOnline } = useTodo()
         const { data, error } = await authClient.signIn.email({
             email,
             password
@@ -32,12 +33,16 @@ export const useUser = () => {
         }
 
         await getCurrentUser()
+        await loadTodoListFromOnline()
         return data
     }
 
     const logout = async () => {
-        await authClient.signOut()
+        const { clearTodoListOnline } = useTodo()
+
         user.value = null
+        await authClient.signOut()
+        clearTodoListOnline()
     }
 
     return {
