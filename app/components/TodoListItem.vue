@@ -37,6 +37,7 @@ const onDeleteConfirmed = (id: string) => {
                         <span :class="{ 'line-through text-gray-400': item.done }">{{ item.title }}</span>
                     </template>
                 </UCheckbox>
+                
                 <ModalUpdateTitle 
                     header-title="Update Todo List Item Title" 
                     :previos-title="todo.title"
@@ -47,13 +48,13 @@ const onDeleteConfirmed = (id: string) => {
                 </ModalUpdateTitle>
 
                 <ModalConfirm
-                            title="Ary you sure you want to delete this todo list?"
-                            :description="`Item title: ${item.title}`"
-                            confirm-color="error"
-                            @confirmed="onDeleteConfirmed(item.id)"
-                        >
-                            <Icon name="material-symbols:delete-forever" class="text-red-500 cursor-pointer" size="1.2rem" />
-                        </ModalConfirm>
+                    title="Ary you sure you want to delete this todo list?"
+                    :description="`Item title: ${item.title}`"
+                    confirm-color="error"
+                    @confirmed="onDeleteConfirmed(item.id)"
+                >
+                    <Icon name="material-symbols:delete-forever" class="text-red-500 cursor-pointer" size="1.2rem" />
+                </ModalConfirm>
             </div>
         </li>
     </ul>

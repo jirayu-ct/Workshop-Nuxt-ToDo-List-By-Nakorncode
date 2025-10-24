@@ -75,6 +75,13 @@ bun run preview
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
 
+Start
+```
+pnpm i
+pnpm prisma generate
+pnpm prisma db push
+```
+
 
 Package install client
 ```

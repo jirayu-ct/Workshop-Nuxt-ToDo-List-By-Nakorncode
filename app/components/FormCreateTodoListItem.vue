@@ -20,7 +20,7 @@ const onSubmit = () => {
 <template>
     <form @submit.prevent="onSubmit()">
         <div class="flex gap-1">
-            <UInput v-model="title" class="w-full" placeholder="Enter a Title of the todo list item"></UInput>
+            <UInput v-model="title" class="w-full" placeholder="Enter a Title of the todo list item" />
             <UButton type="submit">Submit</UButton>
         </div>
     </form>

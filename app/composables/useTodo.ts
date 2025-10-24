@@ -125,19 +125,39 @@ export const useTodo = () => {
         todo.title = newTitle
     }
 
-    const getTodo = (id: string) => {
-        const todo = todos.value.find(todo => todo.id === id)
+    const getTodo = (todoListId: string) => {
+        const todo = todos.value.find(todo => todo.id === todoListId)
 
         if (!todo) {
             throw new Error('Todo not found')
         }
+        
+        const addItem = async(title: string) => {
+            if(user.value && todo.onlineMode) {
 
-        const addItem = (itemTitle: string) => {
-            todo.items.push({
-                id: uuid(),
-                title: itemTitle,
-                done: false
-            })
+                start()
+                const { data } = await $fetch('/api/todos/items', {
+                    method: 'POST',
+                    body: {
+                        todoListId,
+                        title
+                    }
+                })
+                finish()
+
+                todo.items.push({
+                    id: data.id,
+                    title: data.title,
+                    done: data.done
+                })
+            }
+            else{
+                todo.items.push({
+                    id: uuid(),
+                    title: title,
+                    done: false
+                })
+            }
         }
 
         const updateItemTitle = (itemId: string, newTitle: string) => {
