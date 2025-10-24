@@ -25,7 +25,9 @@ const onLogin = async () => {
         })
         return
     }
-    loading.value = false
+    finally{
+        loading.value = false
+    }
 }
 </script>
 

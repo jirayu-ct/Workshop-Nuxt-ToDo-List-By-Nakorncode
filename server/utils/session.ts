@@ -1,5 +1,5 @@
 import { authClient } from '~/utils/auth-client'
-import { H3Event } from 'h3'
+import type { H3Event } from 'h3'
 
 export const getCurrentUser = async(event: H3Event) => {
     const session = await authClient.getSession({

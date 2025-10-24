@@ -54,18 +54,26 @@ const onSyncTodo = async (id: string) => {
                                         todo.onlineMode ? 'Onlien' : 'Offline' }}</span>
                             </div>
 
-                            <UButton v-if="!todo.onlineMode && user" size="xs" color="secondary"
-                                :loading="syncBtnLoading" @click="onSyncTodo(todo.id)">Sync Now</UButton>
+                            <UButton 
+                                v-if="!todo.onlineMode && user" size="xs" color="secondary"
+                                :loading="syncBtnLoading" 
+                                @click="onSyncTodo(todo.id)"
+                            >Sync Now</UButton>
 
-                            <ModalUpdateTitle header-title="Update Todo List Title" :previos-title="todo.title"
-                                placeholder="Enter a new title" @update="onTodoTitleUpdated(todo.id, $event)">
+                            <ModalUpdateTitle 
+                                header-title="Update Todo List Title" :previos-title="todo.title"
+                                placeholder="Enter a new title" 
+                                @update="onTodoTitleUpdated(todo.id, $event)"
+                            >
                                 <UButton color="secondary" size="xs">Update Title</UButton>
                             </ModalUpdateTitle>
 
 
-                            <ModalConfirm title="Ary you sure you want to delete this todo list?"
+                            <ModalConfirm 
+                                title="Ary you sure you want to delete this todo list?"
                                 :description="`Todo: ${todo.title}`" confirm-color="error"
-                                @confirmed="onDeleteConfirmed(todo.id)">
+                                @confirmed="onDeleteConfirmed(todo.id)"
+                            >
                                 <UButton color="error" size="xs">Delete</UButton>
                             </ModalConfirm>
                         </div>
